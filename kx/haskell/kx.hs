@@ -1,4 +1,4 @@
-{-# LANGUAGE MagicHash, FlexibleInstances, BangPatterns #-}
+{-# LANGUAGE BangPatterns #-}
 import qualified Data.Vector.Storable as SV
 import qualified Data.Vector.Storable.Mutable as MSV
 import qualified Data.Vector as V
@@ -174,7 +174,7 @@ createS cl = unsafePerformIO $ do
 
 -- | Constructor for T - a Q table - we must always build it using this function
 fillT :: V.Vector Elems -> Elems
-fillT !xs = T (V.foldl' (\x y -> x + size y) 3 xs) xs -- 2 bytes for table header - 1 additional byte for dict type header. T is of the form T (dict type + list of columns) (General List - nested lists, one per column)
+fillT !xs = T (V.foldl' (\x y -> x + size y) 3 xs) xs -- 2 bytes for table header - 1 additional byte for dict type header
 {-# INLINE fillT #-}
 
 -- | Write a Word16 in little endian format
