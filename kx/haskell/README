@@ -1,5 +1,5 @@
 
-This is haskell binding for Q for Linux on x86_64 - this binding is one-way at the moment, and generates only Q IPC bytes. It is also unlikely to be portable to other platforms at the moment. 
+This is haskell binding for Q for Linux/Mac on x86_64 - this binding is one-way at the moment, and generates only Q IPC bytes. It is also unlikely to be portable to other platforms at the moment. 
 
 Also, there is no definition for Q dictionary yet as it is not needed if we are only sending Q tables over IPC.
 
