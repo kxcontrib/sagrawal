@@ -6,7 +6,7 @@ Also, there is no definition for Q dictionary yet as it is not needed if we are 
 There is no functionality to receive Q IPC bytes (as ByteString object over network), and decode them. But, it should be easy to add since the code to encode is already there. Decoding should be pretty much inverse of encoding given the simplicity of Q IPC representation.
 
 How to run:
-- Start a Q db server on localhost:2001 using t.q. Then, execute kx. It  will insert a table of 5 million elements into `t using .u.insert. On Q server side, .u.  insert times how long it takes to do bulk-update of the table
+- Start a Q db server on localhost:2001 using t.q. Then, execute kx (see rest of the steps below on how to compile and execute kx). It  will insert a table of 5 million elements into `t using .u.insert. On Q server side, .u.  insert times how long it takes to do bulk-update of the table
   q t.q
 - Compile kx.hs using: ghc -O2 --make kx.hs -rtsopts
 - Execute kx executable - this will insert 5 million rows in table `t: 
