@@ -2,7 +2,9 @@
 //by Sun Wu, Udi Manber, Gene Myers and Web Miller.
 //Note: P=(D-(M-N))/2, D is shortest edit distance, M>=N
 
-//In Miller-Myer diff algorithm, m>n - so, flip arguments if this is not the case
+//Returns indices in a and b for longest common sequence given equality function f
+//Example: lcs["ABCABA";"CABBA";=]
+//In Miller-Myers diff algorithm, m>n - so, function flips arguments if this is not the case
 lcs:{[a;b;f] $[flipped;{(x[1];x[0])};(::)] $[flipped:(count a)>count b;lcsh[b;a;f];lcsh[a;b;f]]}
 
 //Optimized version of lcs function - chops off common suffix and prefix before running
@@ -36,10 +38,10 @@ lcsh:{[a;b;f]
   @[`.;`paths;:;()];
   //iterate backwards starting from last snake on delta (i.e., destination (n,m)) and work backwards to (0,0) where 
   //snode is -1. So, condition for iterate is set to check for snode value
-  {[d;i] if[d[i][3]>0;@[`.;`paths;,;enlist (d[i][1];d[i][2];d[i][3])]]; d[i][0]}[snakearr;]/[-1<;-1+ count snakearr];
-  idx: { (x[0]+i;x[1]+i:til x[2])} each reverse paths;
+  {[d;i] if[d[i][3]>0;@[`.;`paths;,;enlist (d[i][1]+i2;d[i][2] + i2:til d[i][3])]]; d[i][0]}[snakearr;]/[-1<;-1+ count snakearr];
+  idx: {(raze x[;0];raze x[;1])} reverse paths;
   ![`.;();0b;`fp`snodes`snakearr`paths]; /delete the global arrays
-  :(raze idx[;0];raze idx[;1]);
+  :idx;
   }
 
 //Snakes are as in snakes-and-ladders board game. To get from top of the board

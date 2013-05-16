@@ -17,10 +17,10 @@
 lcs:{[a;b;f]
   snakearr: snakes[a;b;f];
   mdiff.paths:(); /global list of paths - need it to avoid create temps
-  {[d;i] if[d[i][3]>0;@[`mdiff;`paths;,;enlist (d[i][1];d[i][2];d[i][3])]]; d[i][0]}[snakearr;]/[-1<;-1+ count snakearr];
-  idx: { (x[0]+i;x[1]+i:til x[2])} each reverse mdiff.paths;
+  {[d;i] if[d[i][3]>0;@[`mdiff;`paths;,;enlist (d[i][1] + i2;d[i][2] + i2:til d[i][3])]]; d[i][0]}[snakearr;]/[-1<;-1+ count snakearr];
+  idx: {(raze x[;0];raze x[;1])} reverse mdiff.paths;
   ![`mdiff;();0b;enlist `paths];
-  :(raze idx[;0];raze idx[;1]);}
+  :idx;}
 
 //Calculate shortest edit sequence from a to b
 //Returns a list of snakes
