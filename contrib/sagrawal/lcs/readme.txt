@@ -2,7 +2,7 @@ This repository contains implementation of diff/longest common subsequence(LCS) 
 
 - Use pure q code. In that case, use q/miller.q. Pure q code has the advantage that you can pass an arbitrary comparison function for LCS. The disadvantage is that it can be quite slow when the number of diffs are large. Also, it can't be peach'ed because of global arrays.
 
-- Use c code. In that case, compile c code in c/* using Makefile, and load it using c/lcs.q. This code is very fast than pure Q code because the equality function is hard-coded, and vectorized, with type checking and bounds-checking done as early as possible. It often runs 100-200 times faster than Q code (depending on number of comparisons), and can be peach'ed.
+- Use c code. In that case, compile c code in c/* using Makefile, and load it using c/lcs.q. This code is much faster than pure Q code because the equality function is hard-coded, and vectorized, with type checking and bounds-checking done as early as possible. It often runs 100-200 times faster than Q code (depending on number of comparisons), and can be peach'ed.
 
 Note: Compiling the C code will require gcc, preferably v4.6+ because of gcc specific attributes in the code. I have tested it with gcc 4.7.2.
 
