@@ -23,11 +23,12 @@ q)lcs[a;a] //this is ok - both elements match
 q)lcs[enlist a;enlist a] //deeper nesting - not ok - returns (`int$();`int$())
 
 
-q)null each lcs[enlist ;enlist a]
+q)null each lcs[enlist a;enlist a]
 11b
 
 Example of how to use:
 ----------------------
+
 Pure Q code: Load q/miller.q
 -----------
 q)lcs["HUMAN";"CHIMPANZEE";=]
@@ -60,6 +61,7 @@ q)\t lcs[a;b]
 17
 
 Q code:
+-------
 q)a: til 2000
 q)b: 1000 _ til 3000
 q)\t lcs[a;b;=]
