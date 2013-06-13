@@ -1,4 +1,5 @@
 #include <inttypes.h>
+#include <string.h>
 #include "utils.h"
 
 /* Function to validate two nested lists x and y of depth 1 have same element count for
@@ -23,28 +24,31 @@ K test(K x,K y){
 //quick vector equality comparison - assumption is x,y length are very small, typically 2 or 3
 static inline uint8_t __attribute__((always_inline)) equalv(K x,K y,I t){
   I i=0;
-  uint8_t equal=1;
   switch(t){
     case KB: case KC:
-    case KG: for(;i<x->n;i++) equal = equal && (kG(x)[i] == kG(y)[i]);
+    case KG: for(;i<x->n && (kG(x)[i] == kG(y)[i]);i++);
              break;
-    case KH: for(;i<x->n;i++) equal = equal && (kH(x)[i] == kH(y)[i]);
+    case KH: for(;i<x->n && (kH(x)[i] == kH(y)[i]);i++);
              break;
     case KM: case KD: case KU: case KV: case KT: case KI:
-             for(;i<x->n;i++) equal = equal && (kI(x)[i] == kI(y)[i]);
+             for(;i<x->n && (kI(x)[i] == kI(y)[i]);i++);
              break;
     case KP: case KN:
-    case KJ: for(;i<x->n;i++) equal = equal && (kJ(x)[i] == kJ(y)[i]);
+    case KJ: for(;i<x->n && (kJ(x)[i] == kJ(y)[i]);i++);
              break;
-    case KE: for(;i<x->n;i++) equal = equal && (kE(x)[i] == kE(y)[i]);
+    case KE: for(;i<x->n && (kE(x)[i] == kE(y)[i]);i++);
              break;
-    case KF: for(;i<x->n;i++) equal = equal && (kF(x)[i] == kF(y)[i]);
+    case KF: for(;i<x->n && (kF(x)[i] == kF(y)[i]);i++);
              break;
-    case KS: for(;i<x->n;i++) equal = equal && (kS(x)[i] == kS(y)[i]);
+    case KS: for(;i<x->n && (kS(x)[i] == kS(y)[i]);i++);
              break;
+    #if KXVER>=3
+    case UU: for(;i<x->n && (memcmp(x->G0 + i*sizeof(U),y->G0 + i*sizeof(U),sizeof(U)) == 0);i++);
+             break;
+    #endif
     default: R 0;
   }
-  R equal;
+  R (i==x->n);
 }
 
 //this function does the job of filtering out non-conforming lists by returning 0 for non-atoms
@@ -58,6 +62,9 @@ static inline uint8_t __attribute__((always_inline)) equala(K x,K y,I t){
     case -KE: R (x->e == y->e);
     case -KF: R (x->f == y->f);
     case -KS: R (x->s == y->s);
+    #if KXVER>=3
+    case -UU: R (memcmp(x->G0,y->G0,sizeof(U)) == 0);
+    #endif
   }
   R 0;
 }
@@ -103,6 +110,10 @@ I cmpv(K x,K y,I i,I j){
              break;
     case KS: for(;i<x->n && j<y->n && (kS(x)[i] == kS(y)[j]);i++,j++);
              break;
+    #if KXVER>=3  
+    case UU: for(;i<x->n && j<y->n && (memcmp(x->G0 + i*sizeof(U),y->G0 + j*sizeof(U),sizeof(U)) == 0);i++,j++);
+             break;
+    #endif
     default: R 0;
    }
   R i-ip;
