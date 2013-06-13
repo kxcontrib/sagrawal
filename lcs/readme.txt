@@ -4,7 +4,9 @@ This repository contains implementation of diff/longest common subsequence(LCS) 
 
 - Use c code. In that case, compile c code in c/* using Makefile, and load it using c/lcs.q. This code is much faster than pure Q code because the equality function is hard-coded, and vectorized, with type checking and bounds-checking done as early as possible. It often runs 100-200 times faster than Q code (depending on number of comparisons), and can be peach'ed.
 
-Note: Compiling the C code will require gcc, preferably v4.6+ because of gcc specific attributes in the code. I have tested it with gcc 4.7.2.
+Note: 
+1) Compiling the C code will require gcc, preferably v4.6+ because of gcc specific attributes in the code. I have tested it with gcc 4.7.2.
+2) Make sure KXVER is correct in lcs.h and utils.h before compiling. It is set to 3 for KDB 3.0. For older versions, it should be set to 2.
 
 In both cases, you can pass general lists for comparison, but they shouldn't be nested by depth of more than 1. For example, following list is ok as an argument:
 (til 10;til 10)
