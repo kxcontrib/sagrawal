@@ -112,7 +112,7 @@ static K lcsh(K a,K b,I (*cmp)(K,K,I,I), bool flipped){
 
 K lcs(K a,K b){
   bool g=0; 
-  if(a->t < 0 || b->t < 0)  R knk(2,ki(ni),ki(ni));
+  if(a->t < 0 || b->t < 0 || a->t > 19 || b->t > 19)  R knk(2,ki(ni),ki(ni));
   //check if general list - validate for conforming shape if general list 
   if(a->t == 0){
     if(!validate(a,b)) R knk(2,ki(ni),ki(ni)); //return null if in bad form
