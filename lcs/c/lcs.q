@@ -6,7 +6,7 @@
 //Example: lcs["ABCABA";"CABBA"]
 //In Miller-Myers diff algorithm, m>n - so, function flips arguments if this is not the case
 
-if[null libpth:`$ -3 _ string first pth where count each key each pth:{(`$":",x,"/lcs.so")} each ":" vs getenv `LD_LIBRARY_PATH; -1"lcs.so not found...Aborting"; -1"Checked following LD_LIBRARY_PATH locations:"; -1 (1_) each string each pth; exit 1];
+if[null libpth:`$ -3 _ string first pth where count each key each pth:{(`$":",x,"/lcs.so")} each ":" vs getenv `LD_LIBRARY_PATH; 0N!"lcs.so not found in LD_LIBRARY_PATH...Aborting"; exit 1];
 lcs: libpth 2:(`lcs;2);
 
 //Wrapper to find mutations between two tables given s in sym column. c columns are used
@@ -16,6 +16,7 @@ lcs: libpth 2:(`lcs;2);
 diffTables:{[t1;t2;s;c]
   i1: exec i from t1 where sym in s;
   i2: exec i from t2 where sym in s;
+  if[0 = (count i1)&(count i2); :(i1;i2)]; /if either entry is empty, return
   a:flip (t1 i1) c;
   b:flip (t2 i2) c;
   il:lcs[a;b]; /replace with call to lcsopt instead if optimizing for big tables with long common prefix/suffixes

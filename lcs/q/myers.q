@@ -73,6 +73,7 @@ lcsopt:{[a;b;f]
 diffTables:{[t1;t2;s;c]
   i1: exec i from t1 where sym in s;
   i2: exec i from t2 where sym in s;
+  if[0 = (count i1)&(count i2); :(i1;i2)]; /if either entry is empty, return
   a:flip (t1 i1) c;
   b:flip (t2 i2) c;
   il:lcs[a;b;{[x;y] all x=y}]; /replace with call to lcsopt instead if optimizing for big tables with long common prefix/suffixes
